@@ -1,0 +1,54 @@
+<html>
+<head>
+	<title>auto jump</title>
+</head>
+<body>
+
+	<label for="time">time : </label><input type="time" id="time" name="time"/></br>
+	</br>
+	<label for="url">url : </label><input type="text" id="url" name="url"/><br/>
+	<br/>
+	<button type="button" onclick="ok(); return false;">OK</button><br/>
+	<br/>
+	<div id="message_box"></div>
+
+	<script>
+
+		var time, url, callback;
+
+		var ok = function(){
+
+			// display message
+			time = document.getElementById('time').value;
+			url = document.getElementById('url').value;
+			if(time == null || time == '' || url == null || url == ''){
+				document.getElementById('message_box').innerHTML = "Please input.";
+			}else{
+				document.getElementById('message_box').innerHTML = "jump to <a href='" + url + "' target='_blank'>'" + url + "'</a> at " + time;
+			}
+
+			callback = function(){
+				location.href = url;
+			};
+
+			timer();
+		};
+
+		var timer = function(){
+
+			var now = new Date();
+			var currentTime;
+			currentTime = ('0' + now.getHours()).slice( -2 ) + ':';
+			currentTime += ('0' + now.getMinutes()).slice( -2 );
+
+			if(time == currentTime){
+				console.log('jump');
+				callback();
+			}else{
+				console.log('yet');
+				setTimeout(timer, 1000 * 55);
+			}
+		};
+	</script>
+</body>
+</html>
